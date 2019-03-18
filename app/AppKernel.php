@@ -18,13 +18,13 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Hackspace\Bundle\CalciferBundle\CalciferBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
 
         return $bundles;
@@ -33,5 +33,12 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+    }
+
+
+    public function __construct($environment, $debug)
+    {
+        date_default_timezone_set( 'Europe/Berlin' );
+        parent::__construct($environment, $debug);
     }
 }
